@@ -4,7 +4,7 @@ import Ink from 'react-ink'
 import {Select, Slider, Button} from 'antd'
 
 import {Center, Container, Heading, FixedContainer} from '../core/styled'
-import {fonts, fontSize, speak} from '../core/helper'
+import {fonts, fontSize, speak, getRandomInt} from '../core/helper'
 
 const Option = Select.Option
 
@@ -43,7 +43,18 @@ export default class extends Component {
   }
 
   voiceTest = () => {
-    speak('Hello', this.state.pitchValue, this.state.voiceValue)
+    const messages = [
+      `If you're not an asshole this company dies`,
+      `I know HTML. How to meet ladies`,
+      `it's not a bug it's a feature`,
+      `This is your mom, and you. you're not my baby.`,
+    ]
+    // speak example message
+    speak(messages[getRandomInt(0, messages.length - 1)], this.state.pitchValue, this.state.voiceValue)
+  }
+
+  updateVoice = async () => {
+
   }
 
   render = () => (
@@ -63,7 +74,7 @@ export default class extends Component {
           <Slider min={0} step={0.01} max={2} onChange={this.onPitchChange} value={this.state.pitchValue} />
 
           <br/>
-          <Button style={{marginRight: '10px'}} type="primary">Finish</Button>
+          <Button onClick={this.updateVoice} style={{marginRight: '10px'}} type="primary">Finish</Button>
           <Button onClick={this.voiceTest}>Voice Test</Button>
         </Container>
       </Center>

@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
 import {injectGlobal} from 'styled-components'
+import {connect} from 'react-redux'
 
 import Setting from './Setting'
 
 import Landing from './Landing'
 import ChatRoom from './ChatRoom'
 import {provider, auth, firestore} from '../core/client'
+
+import {userLogin} from '../ducks/user'
 
 injectGlobal`
   body {
@@ -17,10 +20,6 @@ injectGlobal`
 `
 
 class App extends Component {
-  state = {
-    user: null,
-  }
-
   login = async () => {
     let {user} = await auth().signInWithPopup(provider)
     // insert to firebase firestore
@@ -38,23 +37,30 @@ class App extends Component {
       })
       user.firstTime = true
     }
-    this.setState({user})
+    // update redux state
+    this.props.userLogin(user)
   }
 
-  logout = async () => {
-    await auth().signOut()
-    this.setState({user: null})
-  }
+  // logout = async () => {
+  //   await auth().signOut()
+  // }
 
   render() {
-    const {user} = this.state
+    const {user} = this.props.user
     return(
       <div>
-        <Setting/>
-        {/* {user ? <ChatRoom user={user}/> : <Landing login={this.login}/>} */}
+        {user ? <ChatRoom/> : <Landing login={this.login}/>}
       </div>
     )
   }
 }
 
-export default App
+const mapStateToProps = state => ({
+  user: state.user,
+})
+
+const mapDispatchToProps = dispatch => ({
+  userLogin: user => dispatch(userLogin(user)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

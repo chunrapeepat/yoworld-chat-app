@@ -1,7 +1,11 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import Ink from 'react-ink'
+import {connect} from 'react-redux'
 import {Select, Slider, Button} from 'antd'
+
+import {firestore} from '../core/client'
+import {userLogin} from '../ducks/user'
 
 import {Center, Container, Heading, FixedContainer} from '../core/styled'
 import {fonts, fontSize, speak, getRandomInt} from '../core/helper'
@@ -14,7 +18,7 @@ const Label = styled.span`
   margin-bottom: 5px;
 `
 
-export default class extends Component {
+class Setting extends Component {
   state = {
     voices: [],
     pitchValue: 1,
@@ -54,7 +58,13 @@ export default class extends Component {
   }
 
   updateVoice = async () => {
-
+    const docUser = await firestore.collection('users')
+      .where('uid', '==', this.props.user.uid).get()
+    // update voices
+    await docUser.docs[0].ref.update({
+      pitch: this.state.pitchValue,
+      voice: this.state.voiceValue,
+    })
   }
 
   render = () => (
@@ -81,3 +91,9 @@ export default class extends Component {
     </FixedContainer>
   )
 }
+
+const mapStateToProps = state => ({
+  user: state.user.user
+})
+
+export default connect(mapStateToProps, null)(Setting)

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import firebase from 'firebase'
 import {injectGlobal} from 'styled-components'
 
+import Landing from './Landing'
 import {provider, auth} from '../core/client'
 
 injectGlobal`
@@ -20,6 +21,7 @@ class App extends Component {
 
   login = async () => {
     const {user} = await auth().signInWithPopup(provider)
+    console.log('hello', user)
     this.setState({user})
   }
 
@@ -31,15 +33,8 @@ class App extends Component {
   render() {
     const {user} = this.state
     return(
-      <div className='app'>
-        <p>{user ? `Hi, ${user.displayName}!` : 'Hi!'}</p>
-        <button onClick={this.login}>
-          Login with Facebook
-        </button>
-
-        <button onClick={this.logout}>
-          Logout
-        </button>
+      <div>
+        {user ? 'login' : <Landing login={this.login}/>}
       </div>
     )
   }

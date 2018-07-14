@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import {connect} from 'react-redux'
 
+import {firestore} from '../core/client'
 import {userLogout} from '../ducks/user'
 import Card from '../components/Card'
 import Navbar from '../components/Navbar'
@@ -16,23 +17,36 @@ const Grid = styled.div`
 `
 
 class Room extends Component {
+  state = {
+    users: [],
+  }
+
+  getAllUser = async () => {
+    const docUser = await firestore.collection('users').get()
+    // return only user json data
+    const users = docUser.docs.map(user => user.data())
+    // update state
+    this.setState({users})
+  }
+
+  componentDidMount = () => {
+    this.getAllUser()
+    // update new user in realtime
+    firestore.collection('users').onSnapshot({
+      includeMetadataChanges: true,
+    }, doc => {
+      this.getAllUser()
+    })
+  }
+
   render() {
     return (
       <Container>
         <Navbar logout={this.props.userLogout} displayName="Chun Rapeepat" photo="https://graph.facebook.com/984251461749210/picture"/>
         <Grid>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
-          <Card photo="https://graph.facebook.com/984251461749210/picture?type=large"/>
+          {this.state.users.map((user, i) => {
+            return <Card user={user} key={`user_${i}`}/>
+          })}
         </Grid>
       </Container>
     )

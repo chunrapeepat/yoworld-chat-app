@@ -1,4 +1,4 @@
-import {auth} from '../core/client'
+import {auth, firestore} from '../core/client'
 import {createReducer, createAction, createActionType} from '../core/helper'
 
 // assign namespace to constant creator

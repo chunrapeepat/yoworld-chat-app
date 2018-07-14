@@ -46,8 +46,7 @@ class App extends Component {
     const {user} = this.props.user
     return(
       <div>
-        <Room />
-        {/* {user ? <ChatRoom/> : <Landing login={this.login}/>} */}
+        {user ? <ChatRoom/> : <Landing login={this.login}/>}
       </div>
     )
   }

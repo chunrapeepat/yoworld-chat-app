@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import {fonts, fontSize} from '../core/helper'
 
 const Container = styled.div`
+  margin: 30px;
   position: relative;
 `
 

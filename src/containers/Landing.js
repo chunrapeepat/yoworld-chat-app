@@ -2,17 +2,8 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import Ink from 'react-ink'
 
-import {Center} from '../core/styled'
+import {Center, FixedContainer} from '../core/styled'
 import {fonts, fontSize} from '../core/helper'
-
-const Container = styled.div`
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  background: black;
-`
 
 const LoginWithFacebook = styled.button`
   position: relative;
@@ -30,12 +21,12 @@ const LoginWithFacebook = styled.button`
 `
 
 export default ({login}) => (
-  <Container>
+  <FixedContainer>
     <Center>
       <LoginWithFacebook onClick={login}>
         <Ink />
         Login With Your Facebook Account
       </LoginWithFacebook>
     </Center>
-  </Container>
+  </FixedContainer>
 )

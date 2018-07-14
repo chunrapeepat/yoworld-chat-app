@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {injectGlobal} from 'styled-components'
 
+import Setting from './Setting'
+
 import Landing from './Landing'
 import ChatRoom from './ChatRoom'
 import {provider, auth, firestore} from '../core/client'
@@ -48,7 +50,8 @@ class App extends Component {
     const {user} = this.state
     return(
       <div>
-        {user ? <ChatRoom user={user}/> : <Landing login={this.login}/>}
+        <Setting/>
+        {/* {user ? <ChatRoom user={user}/> : <Landing login={this.login}/>} */}
       </div>
     )
   }

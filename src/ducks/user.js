@@ -1,3 +1,4 @@
+import {auth} from '../core/client'
 import {createReducer, createAction, createActionType} from '../core/helper'
 
 // assign namespace to constant creator
@@ -22,7 +23,8 @@ export const userReducer = createReducer(initial, state => ({
       user,
     }
   },
-  [USER_LOGOUT]: () => {
+  [USER_LOGOUT]: async () => {
+    await auth().signOut()
     return initial
   },
 }))

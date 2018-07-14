@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {injectGlobal} from 'styled-components'
 import {connect} from 'react-redux'
 
+import Room from './Room'
 import Setting from './Setting'
 
 import Landing from './Landing'
@@ -41,15 +42,12 @@ class App extends Component {
     this.props.userLogin(user)
   }
 
-  // logout = async () => {
-  //   await auth().signOut()
-  // }
-
   render() {
     const {user} = this.props.user
     return(
       <div>
-        {user ? <ChatRoom/> : <Landing login={this.login}/>}
+        <Room />
+        {/* {user ? <ChatRoom/> : <Landing login={this.login}/>} */}
       </div>
     )
   }

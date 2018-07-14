@@ -4,7 +4,7 @@ import Ink from 'react-ink'
 import {Select, Slider, Button} from 'antd'
 
 import {Center, Container, Heading, FixedContainer} from '../core/styled'
-import {fonts, fontSize} from '../core/helper'
+import {fonts, fontSize, speak} from '../core/helper'
 
 const Option = Select.Option
 
@@ -42,6 +42,10 @@ export default class extends Component {
     }
   }
 
+  voiceTest = () => {
+    speak('Hello', this.state.pitchValue, this.state.voiceValue)
+  }
+
   render = () => (
     <FixedContainer>
       <Center>
@@ -60,7 +64,7 @@ export default class extends Component {
 
           <br/>
           <Button style={{marginRight: '10px'}} type="primary">Finish</Button>
-          <Button>Voice Test</Button>
+          <Button onClick={this.voiceTest}>Voice Test</Button>
         </Container>
       </Center>
     </FixedContainer>

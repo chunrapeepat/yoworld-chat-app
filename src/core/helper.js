@@ -29,3 +29,14 @@ export const media = Object.keys(sizes).reduce((accumulator, label) => {
   `
   return accumulator
 }, {})
+
+export const speak = (message, pitch = 1, voice) => {
+  const msg = new SpeechSynthesisUtterance()
+  const voices = window.speechSynthesis.getVoices()
+  // map voice from string
+  msg.voice = voices[voices.map(v => v.voiceURI).indexOf(voice)]
+  msg.pitch = pitch
+  msg.text = message
+
+  speechSynthesis.speak(msg)
+}

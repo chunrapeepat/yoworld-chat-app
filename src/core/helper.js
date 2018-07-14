@@ -33,6 +33,10 @@ export const media = Object.keys(sizes).reduce((accumulator, label) => {
 export const speak = (message, pitch = 1, voice) => {
   const msg = new SpeechSynthesisUtterance()
   const voices = window.speechSynthesis.getVoices()
+  // check no voices
+  if (voices.length === 0) {
+    return;
+  }
   // map voice from string
   msg.voice = voices[voices.map(v => v.voiceURI).indexOf(voice)]
   msg.pitch = pitch

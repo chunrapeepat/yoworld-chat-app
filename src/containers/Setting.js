@@ -38,9 +38,12 @@ class Setting extends Component {
   }
 
   componentDidMount = () => {
-    const voices = window.speechSynthesis.getVoices()
-    const onlyGoogle = voices.map(voice => voice.voiceURI).filter(voice => voice.split(' ')[0] === 'Google')
-    this.setState({voices: onlyGoogle})
+    const state = this
+    window.speechSynthesis.onvoiceschanged = function() {
+      const voices = window.speechSynthesis.getVoices()
+      const onlyGoogle = voices.map(voice => voice.voiceURI).filter(voice => voice.split(' ')[0] === 'Google')
+      state.setState({voices: onlyGoogle})
+    }
   }
 
   voiceTest = () => {
@@ -62,8 +65,6 @@ class Setting extends Component {
       pitch: this.state.pitchValue,
       voice: this.state.voiceValue,
     })
-    // close setting page
-    this.props.close()
   }
 
   render = () => (

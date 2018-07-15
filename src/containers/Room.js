@@ -52,10 +52,8 @@ class Room extends Component {
           if (change.type === 'added') {
             const data = change.doc.data()
             const {form, message, pitch, voice} = data
-
-            console.log('gg', message, pitch, voice, data)
             // speak with speech api
-            // speak(message, pitch, voice)
+            speak(message, pitch, voice)
             // display notification
           }
         })

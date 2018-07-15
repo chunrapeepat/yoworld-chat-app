@@ -30,8 +30,9 @@ export const media = Object.keys(sizes).reduce((accumulator, label) => {
   return accumulator
 }, {})
 
+const msg = new SpeechSynthesisUtterance()
+
 export const speak = (message, pitch = 1, voice) => {
-  const msg = new SpeechSynthesisUtterance()
   const voices = window.speechSynthesis.getVoices()
   // check no voices
   if (voices.length === 0) {

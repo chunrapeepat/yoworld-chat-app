@@ -42,6 +42,13 @@ class App extends Component {
     this.props.userLogin(user)
   }
 
+  componentDidMount() {
+    // auto login when state change
+    auth().onAuthStateChanged(user => {
+      this.props.userLogin(user)
+    })
+  }
+
   render() {
     const {user} = this.props.user
     return(

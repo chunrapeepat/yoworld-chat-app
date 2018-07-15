@@ -5,8 +5,10 @@ import {connect} from 'react-redux'
 import {firestore} from '../core/client'
 import {speak} from '../core/helper'
 import {userLogout} from '../ducks/user'
+
 import Card from '../components/Card'
 import Navbar from '../components/Navbar'
+import MessageList from './MessageList'
 
 const Container = styled.div`
   position: relative;
@@ -65,6 +67,8 @@ class Room extends Component {
             return <Card user={user} key={`user_${i}`}/>
           })}
         </Grid>
+
+        <MessageList/>
       </Container>
     )
   }

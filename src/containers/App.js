@@ -49,6 +49,7 @@ class App extends Component {
   componentDidMount() {
     // auto login when state change
     auth().onAuthStateChanged(async user => {
+      console.log('fuck', user)
       if (!this.props.user.user && user) {
         let userUpdate = Object.assign(user, {})
         // check pitch and voices
@@ -65,6 +66,11 @@ class App extends Component {
             created_at: new Date,
           })
           user.firstTime = true
+        }
+        // check undefined
+        if (!docUser.docs[0]) {
+          window.location.reload()
+          return
         }
         // if voice and pitch is not setting
         const doc = docUser.docs[0].data()

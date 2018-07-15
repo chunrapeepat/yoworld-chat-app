@@ -36,7 +36,7 @@ const Menu = styled.div`
   & > div {
     display: inline-block;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 15px;
   }
 `
 
@@ -45,7 +45,7 @@ export default ({displayName, photo, logout, setting}) => (
     <ProfileImage src={photo}/>
     <Name>{displayName}</Name>
     <Menu>
-      <div onClick={setting}>Setting</div>
+      <div onClick={setting}>Voice Setting</div>
       <div onClick={logout}>Logout</div>
     </Menu>
   </Container>

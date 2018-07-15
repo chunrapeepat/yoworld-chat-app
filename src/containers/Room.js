@@ -8,6 +8,7 @@ import {userLogout} from '../ducks/user'
 
 import Setting from './Setting'
 import Card from '../components/Card'
+import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import MessageList from './MessageList'
 
@@ -81,6 +82,7 @@ class Room extends Component {
           })}
         </Grid>
 
+        <Footer/>
         <MessageList/>
       </Container>
     )

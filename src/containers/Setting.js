@@ -37,13 +37,23 @@ class Setting extends Component {
     })
   }
 
+  loadVoices = () => {
+    const voices = window.speechSynthesis.getVoices()
+    const onlyGoogle = voices.map(voice => voice.voiceURI).filter(voice => voice.split(' ')[0] === 'Google')
+    this.setState({voices: onlyGoogle})
+  }
+
   componentDidMount = () => {
     const state = this
     window.speechSynthesis.onvoiceschanged = function() {
-      const voices = window.speechSynthesis.getVoices()
-      const onlyGoogle = voices.map(voice => voice.voiceURI).filter(voice => voice.split(' ')[0] === 'Google')
-      state.setState({voices: onlyGoogle})
+      state.loadVoices()
     }
+
+    setInterval(() => {
+      if (!this.state.voices.length) {
+        this.loadVoices()
+      }
+    }, 1000)
   }
 
   voiceTest = () => {

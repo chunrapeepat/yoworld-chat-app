@@ -25,19 +25,28 @@ const Name = styled.span`
   transform: translateY(-15px);
 `
 
-const Logout = styled.div`
+const Menu = styled.div`
   position: absolute;
   right: 0;
   top: 10px;
   cursor: pointer;
   font-family: ${fonts.header};
   font-size: ${fontSize.normal}px;
+
+  & > div {
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 10px;
+  }
 `
 
-export default ({displayName, photo, logout}) => (
+export default ({displayName, photo, logout, setting}) => (
   <Container>
     <ProfileImage src={photo}/>
     <Name>{displayName}</Name>
-    <Logout onClick={logout}>Logout</Logout>
+    <Menu>
+      <div onClick={setting}>Setting</div>
+      <div onClick={logout}>Logout</div>
+    </Menu>
   </Container>
 )

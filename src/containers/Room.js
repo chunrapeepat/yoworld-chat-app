@@ -6,6 +6,7 @@ import {firestore} from '../core/client'
 import {speak} from '../core/helper'
 import {userLogout} from '../ducks/user'
 
+import Setting from './Setting'
 import Card from '../components/Card'
 import Navbar from '../components/Navbar'
 import MessageList from './MessageList'
@@ -22,6 +23,7 @@ const Grid = styled.div`
 class Room extends Component {
   state = {
     users: [],
+    setting: false,
   }
 
   getAllUser = async () => {
@@ -55,11 +57,19 @@ class Room extends Component {
       })
   }
 
+  updateSetting = state => () => {
+    this.setState({setting: state})
+  }
+
   render() {
     const {displayName, photoURL} = this.props.user
     return (
       <Container>
-        <Navbar logout={this.props.userLogout} displayName={displayName} photo={photoURL}/>
+        {this.state.setting &&
+          <Setting close={this.updateSetting(false)}/>
+        }
+
+        <Navbar setting={this.updateSetting(true)} logout={this.props.userLogout} displayName={displayName} photo={photoURL}/>
         <Grid>
           {this.state.users.filter(user => {
             return user.uid !== this.props.user.uid

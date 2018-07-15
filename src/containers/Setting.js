@@ -85,7 +85,8 @@ class Setting extends Component {
 
           <br/>
           <Button onClick={this.updateVoice} style={{marginRight: '10px'}} type="primary">Finish</Button>
-          <Button onClick={this.voiceTest}>Voice Test</Button>
+          <Button onClick={this.voiceTest} style={{marginRight: '10px'}}>Voice Test</Button>
+          <Button onClick={this.props.close}>Cancel</Button>
         </Container>
       </Center>
     </FixedContainer>

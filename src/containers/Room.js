@@ -53,29 +53,11 @@ class Room extends Component {
       })
   }
 
-//   from
-// :
-// "Chun Rapeepat"
-// from_uid
-// :
-// "4wXXAVsSMVcButqOyaBaSN9FxXu1"
-// message
-// :
-// "hello"
-// pitch
-// :
-// 1
-// to_uid
-// :
-// "4wXXAVsSMVcButqOyaBaSN9FxXu1"
-// voice
-// :
-// "Google UK English Female"
-
   render() {
+    const {displayName, photoURL} = this.props.user
     return (
       <Container>
-        <Navbar logout={this.props.userLogout} displayName="Chun Rapeepat" photo="https://graph.facebook.com/984251461749210/picture"/>
+        <Navbar logout={this.props.userLogout} displayName={displayName} photo={photoURL}/>
         <Grid>
           {this.state.users.map((user, i) => {
             return <Card user={user} key={`user_${i}`}/>

@@ -59,7 +59,9 @@ class Room extends Component {
       <Container>
         <Navbar logout={this.props.userLogout} displayName={displayName} photo={photoURL}/>
         <Grid>
-          {this.state.users.map((user, i) => {
+          {this.state.users.filter(user => {
+            return user.uid !== this.props.user.uid
+          }).map((user, i) => {
             return <Card user={user} key={`user_${i}`}/>
           })}
         </Grid>

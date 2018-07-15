@@ -49,6 +49,7 @@ class Card extends Component {
       voice: me.voice,
       to_uid: user.uid,
       message: this.state.messageValue,
+      created_at: new Date,
     })
     // clean up and close modal
     this.setState({messageValue: '', visible: false})

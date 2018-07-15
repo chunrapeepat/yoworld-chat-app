@@ -36,6 +36,8 @@ class Room extends Component {
 
   componentDidMount = () => {
     this.getAllUser()
+    // put speak to window
+    window.speak = speak
     // update new user in realtime
     firestore.collection('users').onSnapshot({
       includeMetadataChanges: true,
@@ -43,14 +45,17 @@ class Room extends Component {
       this.getAllUser()
     })
     // listen to new messages
-    firestore.collection('messages').where('to_uid', '==', this.props.user.uid)
+    firestore.collection('messages')
+      .where('to_uid', '==', this.props.user.uid)
       .onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => {
           if (change.type === 'added') {
             const data = change.doc.data()
             const {form, message, pitch, voice} = data
+
+            console.log('gg', message, pitch, voice, data)
             // speak with speech api
-            speak(message, pitch, voice)
+            // speak(message, pitch, voice)
             // display notification
           }
         })

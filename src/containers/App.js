@@ -38,14 +38,41 @@ class App extends Component {
       })
       user.firstTime = true
     }
+    // if voice and pitch is not setting
+    if (docUser.docs.length > 0 && (!docUser.docs[0].data().voice || !docUser.docs[0].data().pitch)) {
+      user.firstTime = true
+    }
     // update redux state
     this.props.userLogin(user)
   }
 
   componentDidMount() {
     // auto login when state change
-    auth().onAuthStateChanged(user => {
-      this.props.userLogin(user)
+    auth().onAuthStateChanged(async user => {
+      if (!this.props.user.user && user) {
+        let userUpdate = Object.assign(user, {})
+        // check pitch and voices
+        const docUser = await firestore.collection('users')
+          .where('uid', '==', user.uid).get()
+        // if user not exist insert to database
+        if(!docUser.docs.length) {
+          await firestore.collection('users').add({
+            uid: user.uid,
+            fb_id: user.providerData[0].uid,
+            email: user.email,
+            photo: user.photoURL,
+            display_name: user.displayName,
+            created_at: new Date,
+          })
+          user.firstTime = true
+        }
+        // if voice and pitch is not setting
+        const doc = docUser.docs[0].data()
+        if (docUser.docs.length > 0 && (!doc.voice || !doc.pitch)) {
+          user.firstTime = true
+        }
+        this.props.userLogin(userUpdate)
+      }
     })
   }
 
